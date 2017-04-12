@@ -84,6 +84,11 @@
 - (IBAction)deleteSqlit:(id)sender {
     [self.fmdbTool fmdbDeleteDatabse];
 }
+// 关闭数据库
+- (IBAction)closeSq:(id)sender {
+    
+    [self.fmdbTool fmdbCloseFmdb];
+}
 
 
 @end

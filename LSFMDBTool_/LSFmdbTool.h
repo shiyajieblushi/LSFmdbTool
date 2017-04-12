@@ -62,6 +62,11 @@ typedef void(^deleteDataBlock)(); // 删除整个数据库数据
 - (void) fmdbDeleteAllDataWithBlock:(deleteDataBlock)deleteDataBlock;
 
 /**
+ * 打开数据库
+ */
+- (void) fmdbOpenFmdb;
+
+/**
  * 关闭数据库
  */
 - (void) fmdbCloseFmdb;

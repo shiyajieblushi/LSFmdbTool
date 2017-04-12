@@ -69,6 +69,14 @@
                                     <action selector="updateAllData:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Od3-GO-tXb"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rz9-6x-n2t">
+                                <rect key="frame" x="133" y="461" width="109" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="关闭数据库"/>
+                                <connections>
+                                    <action selector="closeSq:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BdC-uz-Lwl"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>

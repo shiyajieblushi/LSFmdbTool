@@ -207,7 +207,17 @@
 // 关闭
 - (void)fmdbCloseFmdb{
 
-//    [self.queue close];
+    [self.queue inDatabase:^(FMDatabase *db) {
+       
+        [db close];
+    }];
+}
+// 打开
+- (void) fmdbOpenFmdb{
+
+    [self.queue inDatabase:^(FMDatabase *db) {
+        [db open];
+    }];
 }
 
 // 创建表
@@ -269,7 +279,6 @@
             [mtbStr appendString:[NSString stringWithFormat:@",%@ text",str]];
         }
       
-        
         
         NSLog(@"%@",mtbStr);
         // 0.获得沙盒中的数据库文件名
