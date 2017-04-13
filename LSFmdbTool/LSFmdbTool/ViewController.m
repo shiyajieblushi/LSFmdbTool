@@ -22,6 +22,7 @@
     [super viewDidLoad];
     
     JLProductModel *product = [[JLProductModel alloc] init];
+    product.amount = @"100";
     product.use = @"19" ; product.producttype = @"21" ;
     product.interest = @"d" ;
     product.term  = @"sad" ;
@@ -32,7 +33,9 @@
     product.borrowid = @"12345";
     
     JLProductModel *product2 = [[JLProductModel alloc] init];
-    product2.use = @"20" ; product.producttype = @"你妹" ;
+    product2.amount = @"100";
+    product2.use = @"20" ;
+    product.producttype = @"你妹" ;
     product2.interest = @"妹" ;
     product2.term  = @"妹" ;
     product2.title  = @"妹" ;
@@ -40,6 +43,7 @@
     product2.progress  = @"妹" ;
     product2.status = @"cjk" ;
     product2.borrowid = @"000000";
+    product2.IDD = @"SS";
     
     _dataArr = @[product,product2];
     

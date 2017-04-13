@@ -24,9 +24,7 @@
         const char* propertyName = property_getName(property[i]);
         
         [propertyNameArray addObject: [NSString stringWithUTF8String:propertyName]];
-        
-    }
-    
+    }    
     free(property); // 释放
     
     return propertyNameArray;

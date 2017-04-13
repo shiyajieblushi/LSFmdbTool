@@ -181,26 +181,47 @@
         FMResultSet *rs = [db executeQuery:sqlStr];
         NSMutableArray *mtb = [NSMutableArray array];
 
+        // 1.1 获取参数列表
+        Class class = NSClassFromString(_table_name);
+        NSArray *propertyList = [class getPropertyNameList]; // key
+        
         // 2.遍历结果集
         while (rs.next) {
             int ID = [rs intForColumn:@"id"];
 
             JLProductModel *product = [[JLProductModel alloc] init];
-            product.borrowid = [rs stringForColumn:@"borrowid"];
-            product.use = [rs stringForColumn:@"use"];
-            product.producttype = [rs stringForColumn:@"producttype"];
-            product.term = [rs stringForColumn:@"term"];
-            product.title = [rs stringForColumn:@"title"];
-            product.repaytype = [rs stringForColumn:@"repaytype"];
-            product.progress = [rs stringForColumn:@"progress"];
-            product.status = [rs stringForColumn:@"status"];
-            product.interest = [rs stringForColumn:@"interest"];
+            for (NSString *proper in propertyList) {
+                
+                BOOL letter = [self isCatipalLetter:proper];// 判断是否是大写
+                NSString *daxieStr = [proper capitalizedString];// 首字母转换大写
+                if(letter){//是
+                    daxieStr = proper;
+                }
+                NSString *seletorStr = [NSString stringWithFormat:@"set%@:",daxieStr];// 拼写setter方法
+                SEL seletor = NSSelectorFromString(seletorStr);// 转方法
+                id value = [rs stringForColumn:proper]; // 获取值
+                if(value == NULL){
+                    value = [NSNull null];
+                }else{
+                    [product performSelector:seletor withObject:value]; // 执行setter方法
+                }
+            }
+            
             [mtb addObject:product];
             NSLog(@"%d %@", ID, product.borrowid);
         }
         queryBlock(mtb);
     }];
 
+}
+// 判断首字母是不是大写
+- (BOOL)isCatipalLetter:(NSString *)str{
+    
+    if ([str characterAtIndex:0] >= 'A' && [str characterAtIndex:0] <= 'Z') {
+        
+        return YES;
+    }
+    return NO;
 }
 
 // 关闭
