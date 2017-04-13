@@ -11,14 +11,16 @@
 @interface NSObject (LSGetProperty)
 
 /**
+ * 对象方法
  * 获取所有属性值
  */
-- (NSArray *)getPropertyValueList:(Class)class_name;
+- (NSArray *)getPropertyValueList;
 
 
 /**
+ * 类方法
  * 获取所有属性名
  */
-+ (NSArray *)getPropertyNameList:(Class)class_name;
++ (NSArray *)getPropertyNameList;
 
 @end

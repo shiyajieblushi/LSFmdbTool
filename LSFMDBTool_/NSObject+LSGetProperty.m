@@ -10,18 +10,18 @@
 #import <objc/runtime.h>
 
 @implementation NSObject (LSGetProperty)
-//获取所有属性名
-+ (NSArray *)getPropertyNameList:(Class)class_name{
+// 获取所有属性名
++ (NSArray *)getPropertyNameList{
     
     u_int count = 0;
     
-    objc_property_t *property = class_copyPropertyList([class_name class], &count);
+    objc_property_t *property = class_copyPropertyList([self class], &count);
     
     NSMutableArray *propertyNameArray = [NSMutableArray arrayWithCapacity:count];
     
     for (int i=0; i<count; i++){
         
-        const char* propertyName =property_getName(property[i]);
+        const char* propertyName = property_getName(property[i]);
         
         [propertyNameArray addObject: [NSString stringWithUTF8String:propertyName]];
         
@@ -32,10 +32,15 @@
     return propertyNameArray;
     
 }
-//获取所有属性值
-- (NSArray *)getPropertyValueList:(Class)class_name{
+// 获取所有属性值
+- (NSArray *)getPropertyValueList{
     u_int count = 0;
-    objc_property_t *property = class_copyPropertyList([class_name class], &count);
+   
+    // 获取类名
+    NSString *ssss = [NSString stringWithUTF8String:object_getClassName(self)];
+    Class ccc = NSClassFromString(ssss);
+    
+    objc_property_t *property = class_copyPropertyList([ccc class], &count);
     NSMutableArray *propertyValueArray = [NSMutableArray arrayWithCapacity:count];
     for (int i=0; i<count; i++){
         const char* char_f =property_getName(property[i]);

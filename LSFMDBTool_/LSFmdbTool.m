@@ -81,11 +81,10 @@
     NSLog(@"插入数据");
     [self.queue inDatabase:^(FMDatabase *db) {
 
-        
         Class class = NSClassFromString(_table_name); // 获取类
         
         // 获取属性
-        NSArray *propertyList = [NSObject getPropertyNameList:class];
+        NSArray *propertyList = [class getPropertyNameList];
 
         for (JLProductModel *product in dataArr) {
             
@@ -93,7 +92,7 @@
             NSMutableString *wenhaoStr = [NSMutableString string]; // 拼接问号
             
             // 获取属性值
-            NSArray *valuesList = [product getPropertyValueList:class];
+            NSArray *valuesList = [product getPropertyValueList];
             
             for (int i = 0; i < propertyList.count; i ++) {
                 NSString *str = propertyList[i]; // key
@@ -124,7 +123,7 @@
     NSString *value = @"";
     Class class = NSClassFromString(_table_name); // 获取类
 
-    NSArray *proList = [NSObject getPropertyNameList:[class class]]; // 取出key
+    NSArray *proList = [class getPropertyNameList]; // 取出key
     
     for (NSString *str in proList) {
         if([str isEqualToString:identfier]){
@@ -271,7 +270,7 @@
         _table_name = class_name;
         
         // 获取参数列表
-        NSArray *propertyList = [NSObject getPropertyNameList:class];
+        NSArray *propertyList = [class getPropertyNameList];
 
         NSMutableString *mtbStr = [NSMutableString string]; // 拼接sql语句中的属性列表
         for (NSString *str in propertyList) {
