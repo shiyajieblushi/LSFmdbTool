@@ -180,22 +180,26 @@
         NSString *sqlStr = [NSString stringWithFormat:@"select * from t_%@",_table_name];
         FMResultSet *rs = [db executeQuery:sqlStr];
         NSMutableArray *mtb = [NSMutableArray array];
-
+        
         // 1.1 获取参数列表
         Class class = NSClassFromString(_table_name);
         NSArray *propertyList = [class getPropertyNameList]; // key
         
         // 2.遍历结果集
         while (rs.next) {
-            int ID = [rs intForColumn:@"id"];
-
+            //            int ID = [rs intForColumn:@"id"]; // 获取表中的id
+            
             JLProductModel *product = [[JLProductModel alloc] init];
+            //            Class product = [[class alloc] init];
+            
             for (NSString *proper in propertyList) {
                 
                 BOOL letter = [self isCatipalLetter:proper];// 判断是否是大写
-                NSString *daxieStr = [proper capitalizedString];// 首字母转换大写
+                NSString *daxieStr = @"";// 首字母转换大写
                 if(letter){//是
                     daxieStr = proper;
+                }else{
+                    daxieStr = [self replaceFirstChar:proper];
                 }
                 NSString *seletorStr = [NSString stringWithFormat:@"set%@:",daxieStr];// 拼写setter方法
                 SEL seletor = NSSelectorFromString(seletorStr);// 转方法
@@ -203,12 +207,14 @@
                 if(value == NULL){
                     value = [NSNull null];
                 }else{
-                    [product performSelector:seletor withObject:value]; // 执行setter方法
+                    if([product respondsToSelector:seletor]){ // 判断是否相应某个方法
+                        [product performSelector:seletor withObject:value]; // 执行setter方法
+                    }
                 }
             }
             
             [mtb addObject:product];
-            NSLog(@"%d %@", ID, product.borrowid);
+            //            LSLog(@"%d %@", ID, product.borrowid);
         }
         queryBlock(mtb);
     }];
@@ -224,6 +230,15 @@
     return NO;
 }
 
+// 转换首字母为大写
+- (NSString *)replaceFirstChar:(NSString *)str{
+    
+    char  temp=[str characterAtIndex:0]-32;
+    NSRange range=NSMakeRange(0, 1);
+    NSString *replaceStr = [NSString stringWithFormat:@"%c",temp];
+    str=[str stringByReplacingCharactersInRange:range withString:replaceStr];
+    return str;
+}
 // 关闭
 - (void)fmdbCloseFmdb{
 
