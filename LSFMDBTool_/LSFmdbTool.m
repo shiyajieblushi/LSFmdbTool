@@ -189,8 +189,8 @@
         while (rs.next) {
             //            int ID = [rs intForColumn:@"id"]; // 获取表中的id
             
-            JLProductModel *product = [[JLProductModel alloc] init];
-            //            Class product = [[class alloc] init];
+//            JLProductModel *product = [[JLProductModel alloc] init];
+            id product = [[class alloc] init];
             
             for (NSString *proper in propertyList) {
                 
