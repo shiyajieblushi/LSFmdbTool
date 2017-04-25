@@ -118,7 +118,7 @@
 
 
 // 删除特定某一标示数据
-- (void) fmdbDelete:(JLProductModel *)product identfier:(NSString *)identfier{
+- (void) fmdbDelete:(id)product identfier:(NSString *)identfier{
     
     NSString *value = @"";
     Class class = NSClassFromString(_table_name); // 获取类
@@ -128,7 +128,9 @@
     for (NSString *str in proList) {
         if([str isEqualToString:identfier]){
             SEL selector = NSSelectorFromString(str);
-            value = [product performSelector:selector]; // 调用getter方法，获取值
+            if([product respondsToSelector:selector]){
+                value = [product performSelector:selector]; // 调用getter方法，获取值
+            }
         }
     }
     
