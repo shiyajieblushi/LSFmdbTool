@@ -43,7 +43,7 @@ typedef void(^deleteDataBlock)(); // 删除整个数据库数据
  * 删除指定数据
  * 需要唯一标示(对象的某一个属性)
  */
-- (void) fmdbDelete:(JLProductModel *)product identfier:(NSString *)identfier;
+- (void) fmdbDelete:(id)product identfier:(NSString *)identfier;
 
 /**
  * 删除数据库
